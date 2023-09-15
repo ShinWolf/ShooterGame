@@ -19,6 +19,16 @@ class Player(pygame.sprite.Sprite):
         self.rect.x = 400
         self.rect.y = 500
 
+    def damage(self, amount):
+        if self.health - amount > amount:
+            self.health -= amount
+        else:
+            self.game.game_over()
+
+    def update_health_bar(self, surface):
+        pygame.draw.rect(surface, (60, 63, 60), [self.rect.x + 40, self.rect.y + 20, self.max_health, 5])
+        pygame.draw.rect(surface, (111, 210, 46), [self.rect.x + 40, self.rect.y + 20, self.health, 5])
+
     def launch_projectile(self):
         self.all_projectiles.add(Projectile(self))
 
@@ -28,4 +38,3 @@ class Player(pygame.sprite.Sprite):
 
     def move_left(self):
         self.rect.x -= self.velocity
-        print(self.rect.x)
